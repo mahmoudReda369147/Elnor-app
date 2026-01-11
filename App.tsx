@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import StagePage from './pages/StagePage';
+import Logo from './components/Logo';
 import api from './services/api';
 
 const App: React.FC = () => {
@@ -71,12 +72,38 @@ const App: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fcfaf2]">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
-          className="w-12 h-12 border-4 border-emerald-600 border-t-transparent rounded-full"
-        />
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Logo size="xl" variant="icon" />
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+          className="mt-6"
+        >
+          <div className="flex items-center gap-2">
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1, delay: 0 }}
+              className="w-2 h-2 bg-teal-500 rounded-full"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1, delay: 0.2 }}
+              className="w-2 h-2 bg-teal-500 rounded-full"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ repeat: Infinity, duration: 1, delay: 0.4 }}
+              className="w-2 h-2 bg-teal-500 rounded-full"
+            />
+          </div>
+        </motion.div>
       </div>
     );
   }

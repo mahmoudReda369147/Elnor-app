@@ -1,0 +1,66 @@
+<svg width="64" height="64" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6" />
+      <stop offset="50%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fcd34d" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+    <linearGradient id="pageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fefce8" />
+      <stop offset="100%" stop-color="#fef9c3" />
+    </linearGradient>
+    <radialGradient id="glowGradient" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#fbbf24" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Main circle -->
+  <circle cx="60" cy="60" r="54" fill="url(#mainGradient)" />
+
+  <!-- Inner ring -->
+  <circle cx="60" cy="60" r="48" fill="none" stroke="#5eead4" stroke-width="1" stroke-opacity="0.3" />
+
+  <!-- Ambient glow -->
+  <ellipse cx="60" cy="35" rx="30" ry="20" fill="url(#glowGradient)" />
+
+  <!-- Light rays -->
+  <g opacity="0.9">
+    <path d="M60 15 L63 32 L57 32 Z" fill="url(#goldGradient)" />
+    <path d="M45 20 L52 34 L48 36 Z" fill="url(#goldGradient)" opacity="0.8" />
+    <path d="M32 28 L43 40 L40 43 Z" fill="url(#goldGradient)" opacity="0.6" />
+    <path d="M75 20 L68 34 L72 36 Z" fill="url(#goldGradient)" opacity="0.8" />
+    <path d="M88 28 L77 40 L80 43 Z" fill="url(#goldGradient)" opacity="0.6" />
+  </g>
+
+  <!-- Light source -->
+  <circle cx="60" cy="24" r="5" fill="url(#goldGradient)" />
+  <circle cx="60" cy="24" r="2.5" fill="#fef3c7" />
+
+  <!-- Open Book -->
+  <g transform="translate(60, 68)">
+    <ellipse cx="0" cy="24" rx="28" ry="4" fill="#0f766e" opacity="0.2" />
+    <path d="M-3 -8 C-3 -8 -30 -5 -30 -2 L-30 22 C-30 25 -3 20 -3 20 Z" fill="url(#pageGradient)" stroke="#d4d4d8" stroke-width="0.5" />
+    <path d="M3 -8 C3 -8 30 -5 30 -2 L30 22 C30 25 3 20 3 20 Z" fill="url(#pageGradient)" stroke="#d4d4d8" stroke-width="0.5" />
+    <path d="M-3 -8 Q0 -10 3 -8 L3 20 Q0 22 -3 20 Z" fill="#99f6e4" />
+    <g opacity="0.4">
+      <line x1="-26" y1="2" x2="-7" y2="0" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+      <line x1="-26" y1="8" x2="-9" y2="6" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+      <line x1="-26" y1="14" x2="-11" y2="12" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+    </g>
+    <g opacity="0.4">
+      <line x1="26" y1="2" x2="7" y2="0" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+      <line x1="26" y1="8" x2="9" y2="6" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+      <line x1="26" y1="14" x2="11" y2="12" stroke="#0d9488" stroke-width="2" stroke-linecap="round" />
+    </g>
+  </g>
+
+  <!-- Decorative dots -->
+  <circle cx="25" cy="55" r="2" fill="#5eead4" opacity="0.5" />
+  <circle cx="95" cy="55" r="2" fill="#5eead4" opacity="0.5" />
+</svg>

@@ -3,7 +3,8 @@ import React, { useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Subject, ContentItem, User } from '../types';
 import { STAGES_DATA } from '../constants';
-import { Button, Card, Textarea } from '../components/UI';
+import { Button, Card, Textarea, Badge } from '../components/UI';
+import Logo from '../components/Logo';
 import { motion } from 'framer-motion';
 
 interface StagePageProps {
@@ -24,11 +25,21 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
   // If stage not found, redirect to home
   if (!stage) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">المرحلة غير موجودة</h1>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-white to-teal-50/20">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center p-12 bg-white rounded-3xl shadow-xl"
+        >
+          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-red-100 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-slate-800 mb-3">المرحلة غير موجودة</h1>
+          <p className="text-slate-500 mb-6">عذراً، لم نتمكن من إيجاد هذه المرحلة</p>
           <Button onClick={() => navigate('/')}>العودة للرئيسية</Button>
-        </div>
+        </motion.div>
       </div>
     );
   }
@@ -67,125 +78,192 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Background Pattern Overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-0" style={{
-        backgroundImage: 'url("https://www.transparenttextures.com/patterns/islamic-art.png")',
-        backgroundRepeat: 'repeat'
-      }}></div>
+      {/* Background */}
+      <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-white to-teal-50/30" />
 
-      <div className="max-w-5xl mx-auto px-6 py-10 md:py-16 relative z-10">
-        <header className="mb-12 flex flex-col md:flex-row items-center gap-6 text-center md:text-right">
-          <Button variant="outline" className="p-3 rounded-full h-12 w-12 border-emerald-200" onClick={() => navigate('/')}>
-            <span className="text-xl font-bold">←</span>
-          </Button>
-          <div className="flex-1">
-            <h1 className="text-3xl font-extrabold text-emerald-900 mb-2">{stage.title}</h1>
-            <p className="text-gray-600 max-w-2xl">{stage.description}</p>
+      {/* Decorative Elements */}
+      <div className="fixed top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-teal-100/20 to-transparent rounded-full blur-3xl -translate-y-1/2 -translate-x-1/3" />
+      <div className="fixed bottom-0 right-0 w-[400px] h-[400px] bg-gradient-to-tr from-amber-100/20 to-transparent rounded-full blur-3xl translate-y-1/2 translate-x-1/3" />
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-8 md:py-12">
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-10"
+        >
+          {/* Logo */}
+          <div className="flex justify-center mb-8">
+            <Logo size="md" />
           </div>
-          <div className="hidden md:block">
-            <div className="bg-emerald-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md">
-              الخطة الدراسية
+
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            {/* Back Button */}
+            <button
+              onClick={() => navigate('/')}
+              className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-teal-600 hover:border-teal-300 transition-all shadow-sm hover:shadow-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Title */}
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Badge variant="primary">المستوى {stage.id}</Badge>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">{stage.title}</h1>
+              <p className="text-slate-500">{stage.description}</p>
+            </div>
+
+            {/* Progress Indicator */}
+            <div className="hidden md:flex items-center gap-3 bg-white rounded-2xl px-5 py-4 shadow-lg border border-slate-100">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-slate-500 text-sm">المقررات</p>
+                <p className="text-slate-800 font-bold">{stage.curriculum?.length || 0} مادة</p>
+              </div>
             </div>
           </div>
-        </header>
+        </motion.header>
 
         {/* Curriculum Grid Section */}
         {stage.curriculum && (
           <motion.section
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="mb-16"
           >
-            <div className="bg-emerald-900 rounded-[2.5rem] p-1 mb-8 shadow-2xl">
-              <div className="bg-emerald-900 py-6 text-center text-white border-b border-emerald-800">
-                <h2 className="text-2xl font-bold font-quran tracking-wide">مقررات المستوى الأول</h2>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-600 to-teal-700 flex items-center justify-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-1 bg-emerald-800 rounded-b-[2.4rem] overflow-hidden">
-                {stage.curriculum.map((sub, idx) => {
-                  const fileCount = getSubjectFileCount(sub.title);
-                  return (
-                    <div
-                      key={idx}
-                      className={`bg-white p-6 transition-colors group cursor-pointer ${
-                        selectedSubject?.title === sub.title
-                          ? 'bg-emerald-100 ring-2 ring-emerald-500 ring-inset'
-                          : 'hover:bg-emerald-50'
-                      } ${
-                        fileCount > 0 ? 'hover:shadow-lg' : 'opacity-75'
-                      }`}
-                      onClick={() => handleSubjectClick(sub)}
-                    >
-                      <h4 className="text-emerald-900 font-bold mb-1 flex items-center gap-2">
-                        <span className={`w-2 h-2 rounded-full transition-transform ${
-                          selectedSubject?.title === sub.title ? 'bg-emerald-600 scale-150' : 'bg-emerald-500 group-hover:scale-125'
-                        }`}></span>
-                        {sub.title}:
-                        {fileCount > 0 && (
-                          <span className={`mr-auto text-xs px-2 py-0.5 rounded-full ${
-                            selectedSubject?.title === sub.title
-                              ? 'bg-emerald-600 text-white'
-                              : 'bg-emerald-100 text-emerald-700'
-                          }`}>
-                            {fileCount} ملفات
-                          </span>
-                        )}
-                      </h4>
-                      <p className="text-gray-600 text-sm leading-relaxed">{sub.book}</p>
+              <h2 className="text-xl font-bold text-slate-800">المقررات الدراسية</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {stage.curriculum.map((sub, idx) => {
+                const fileCount = getSubjectFileCount(sub.title);
+                const isSelected = selectedSubject?.title === sub.title;
+
+                return (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ y: -4 }}
+                    onClick={() => handleSubjectClick(sub)}
+                    className={`
+                      relative p-5 rounded-2xl cursor-pointer transition-all duration-300
+                      ${isSelected
+                        ? 'bg-gradient-to-br from-teal-500 to-teal-600 text-white shadow-xl shadow-teal-500/25'
+                        : 'bg-white border border-slate-100 hover:border-teal-200 hover:shadow-lg'
+                      }
+                    `}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className={`
+                        w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0
+                        ${isSelected ? 'bg-white/20' : 'bg-teal-50'}
+                      `}>
+                        <span className={`text-lg font-bold ${isSelected ? 'text-white' : 'text-teal-600'}`}>
+                          {idx + 1}
+                        </span>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className={`font-bold truncate ${isSelected ? 'text-white' : 'text-slate-800'}`}>
+                            {sub.title}
+                          </h4>
+                          {fileCount > 0 && (
+                            <span className={`
+                              text-xs px-2 py-0.5 rounded-full flex-shrink-0
+                              ${isSelected ? 'bg-white/20 text-white' : 'bg-teal-100 text-teal-700'}
+                            `}>
+                              {fileCount}
+                            </span>
+                          )}
+                        </div>
+                        <p className={`text-sm truncate ${isSelected ? 'text-teal-100' : 'text-slate-500'}`}>
+                          {sub.book}
+                        </p>
+                      </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.section>
         )}
 
-        <div className="space-y-16">
-          {/* Content Items */}
-          <section ref={contentSectionRef}>
-            <h3 className="text-xl font-bold text-emerald-800 mb-4 flex items-center gap-3">
-              <span className="bg-emerald-100 p-2 rounded-lg">📚</span>
-              المحتوى المرئي والمواد العلمية
-            </h3>
-
-            {/* Filter indicator */}
-            {selectedSubject && (
-              <div className="mb-8 flex items-center gap-3 bg-emerald-50 border border-emerald-200 rounded-2xl p-4">
-                <div className="bg-emerald-600 text-white p-2 rounded-xl">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <p className="text-emerald-800 font-bold">{selectedSubject.title}</p>
-                  <p className="text-emerald-600 text-sm">{selectedSubject.book}</p>
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setSelectedSubject(null)}
-                  className="text-emerald-700 border-emerald-300 hover:bg-emerald-100"
-                >
-                  عرض الكل
-                </Button>
+        {/* Content Section */}
+        <section ref={contentSectionRef}>
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
               </div>
-            )}
+              <h2 className="text-xl font-bold text-slate-800">المحتوى التعليمي</h2>
+            </div>
 
-            <div className="grid grid-cols-1 gap-12">
-              {getFilteredContent().length > 0 ? (
-                getFilteredContent().map((item) => (
-                  <motion.div
-                    key={item.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                  >
-                    <Card className="border-none shadow-xl shadow-emerald-900/5">
-                      <div className="p-6 bg-white border-b border-gray-100 flex items-center justify-between">
-                        <div>
-                          <h4 className="text-lg font-bold text-emerald-900 mb-1">{item.title}</h4>
-                          <p className="text-gray-500 text-sm">{item.description}</p>
-                        </div>
-                        <div className="bg-emerald-50 p-3 rounded-2xl text-emerald-700">
+            {selectedSubject && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setSelectedSubject(null)}
+              >
+                عرض الكل
+              </Button>
+            )}
+          </div>
+
+          {/* Filter indicator */}
+          {selectedSubject && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 flex items-center gap-4 bg-teal-50 border border-teal-100 rounded-2xl p-4"
+            >
+              <div className="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-teal-800 font-bold">{selectedSubject.title}</p>
+                <p className="text-teal-600 text-sm">{selectedSubject.book}</p>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Content Items */}
+          <div className="space-y-8">
+            {getFilteredContent().length > 0 ? (
+              getFilteredContent().map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className="overflow-hidden">
+                    {/* Item Header */}
+                    <div className="p-6 flex items-center justify-between border-b border-slate-100">
+                      <div className="flex items-center gap-4">
+                        <div className={`
+                          w-12 h-12 rounded-xl flex items-center justify-center
+                          ${item.type === 'video' ? 'bg-red-50 text-red-500' : item.type === 'pdf' ? 'bg-blue-50 text-blue-500' : 'bg-amber-50 text-amber-500'}
+                        `}>
                           {item.type === 'video' ? (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -193,7 +271,7 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                             </svg>
                           ) : item.type === 'pdf' ? (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                             </svg>
                           ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -201,89 +279,144 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                             </svg>
                           )}
                         </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-slate-800">{item.title}</h4>
+                          <p className="text-slate-500 text-sm">{item.description}</p>
+                        </div>
                       </div>
+                      <Badge variant={item.type === 'video' ? 'primary' : item.type === 'pdf' ? 'neutral' : 'gold'}>
+                        {item.type === 'video' ? 'فيديو' : item.type === 'pdf' ? 'PDF' : 'صوت'}
+                      </Badge>
+                    </div>
 
-                      <div className="bg-gray-900">
-                        {item.type === 'video' ? (
-                          <div className="aspect-video w-full">
+                    {/* Item Content */}
+                    <div className="bg-slate-900">
+                      {item.type === 'video' ? (
+                        <div className="aspect-video w-full">
+                          <iframe
+                            className="w-full h-full"
+                            src={item.url}
+                            title={item.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      ) : item.type === 'pdf' ? (
+                        <div className="bg-white">
+                          <div className="w-full h-[600px]">
                             <iframe
                               className="w-full h-full"
                               src={item.url}
                               title={item.title}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
                             ></iframe>
                           </div>
-                        ) : item.type === 'pdf' ? (
-                          <div className="bg-white">
-                            <div className="w-full h-[600px]">
-                              <iframe
-                                className="w-full h-full"
-                                src={item.url}
-                                title={item.title}
-                              ></iframe>
-                            </div>
-                            <div className="p-4 text-center border-t border-gray-100">
-                              <Button variant="outline" onClick={() => window.open(item.url, '_blank')}>فتح في نافذة جديدة</Button>
-                            </div>
+                          <div className="p-4 text-center border-t border-slate-100 bg-slate-50">
+                            <Button variant="outline" size="sm" onClick={() => window.open(item.url, '_blank')}>
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                              فتح في نافذة جديدة
+                            </Button>
                           </div>
-                        ) : (
-                          <div className="p-8 flex justify-center bg-emerald-50/20">
-                            <audio controls className="w-full max-w-lg">
-                              <source src={item.url} type="audio/mpeg" />
-                              متصفحك لا يدعم مشغل الصوت.
-                            </audio>
-                          </div>
-                        )}
-                      </div>
-                    </Card>
-                  </motion.div>
-                ))
-              ) : (
-                <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-gray-200">
-                  <p className="text-gray-400">لا يوجد محتوى متوفر حالياً لهذه المرحلة.</p>
+                        </div>
+                      ) : (
+                        <div className="p-8 flex justify-center bg-gradient-to-b from-slate-800 to-slate-900">
+                          <audio controls className="w-full max-w-lg">
+                            <source src={item.url} type="audio/mpeg" />
+                            متصفحك لا يدعم مشغل الصوت.
+                          </audio>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                </motion.div>
+              ))
+            ) : (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200"
+              >
+                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-100 flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
                 </div>
-              )}
-            </div>
-          </section>
+                <p className="text-slate-500">لا يوجد محتوى متوفر حالياً لهذه المادة</p>
+              </motion.div>
+            )}
+          </div>
+        </section>
 
-          {/* Message Section */}
-          <section className="mt-20 py-16 px-8 rounded-[3rem] bg-white border border-emerald-100 shadow-2xl shadow-emerald-900/5 overflow-hidden relative">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-bl-full -mr-10 -mt-10 opacity-50"></div>
+        {/* Contact Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20"
+        >
+          <Card className="p-8 md:p-12 relative overflow-hidden">
+            {/* Decorative */}
+            <div className="absolute top-0 left-0 w-40 h-40 bg-teal-50 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-amber-50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
-            <div className="text-center mb-10 relative z-10">
-              <h3 className="text-2xl font-bold text-emerald-900 mb-2">تواصل معنا</h3>
-              <p className="text-gray-600">هل لديك استفسار حول المنهج أو المقررات؟</p>
-            </div>
-
-            <form onSubmit={handleSendMessage} className="space-y-6 relative z-10">
-              <Textarea
-                placeholder="اكتب استفسارك هنا..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                required
-                className="bg-emerald-50/30 border-emerald-100 focus:bg-white"
-              />
-              <div className="flex justify-center">
-                <Button type="submit" className="min-w-[220px]" disabled={submitted}>
-                  {submitted ? (
-                    <>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      تم الإرسال بنجاح
-                    </>
-                  ) : 'إرسال الرسالة'}
-                </Button>
+            <div className="relative z-10">
+              <div className="text-center mb-10">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">تواصل معنا</h3>
+                <p className="text-slate-500">هل لديك استفسار حول المنهج أو المقررات؟</p>
               </div>
-            </form>
-          </section>
-        </div>
 
-        <div className="mt-20 text-center">
-          <Button variant="ghost" onClick={() => navigate('/')} className="text-gray-400">العودة للرئيسية</Button>
-        </div>
+              <form onSubmit={handleSendMessage} className="max-w-xl mx-auto space-y-6">
+                <Textarea
+                  placeholder="اكتب استفسارك هنا..."
+                  value={message}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
+                  required
+                />
+                <div className="flex justify-center">
+                  <Button type="submit" size="lg" disabled={submitted}>
+                    {submitted ? (
+                      <span className="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        تم الإرسال بنجاح
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        إرسال الرسالة
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                      </span>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </Card>
+        </motion.section>
+
+        {/* Footer */}
+        <motion.footer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 pt-8 border-t border-slate-100 text-center"
+        >
+          <Button variant="ghost" onClick={() => navigate('/')}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+            </svg>
+            العودة للرئيسية
+          </Button>
+        </motion.footer>
       </div>
     </div>
   );
