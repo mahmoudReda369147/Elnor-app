@@ -17,6 +17,7 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
+  const [showIjazah, setShowIjazah] = useState(true);
   const contentSectionRef = useRef<HTMLDivElement>(null);
 
   // Find the stage from STAGES_DATA
@@ -377,17 +378,53 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
             <div className="absolute bottom-0 right-0 w-32 h-32 bg-amber-50 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
             <div className="relative z-10">
+              {/* Quran Ijazah Section */}
               <div className="text-center mb-10">
+                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">القرءان الكريم</h3>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowIjazah(!showIjazah)}
+                  className="mb-4"
+                >
+                  {showIjazah ? 'إخفاء الشروط' : 'عرض شروط الإجازة'}
+                </Button>
+              </div>
+
+              {/* Ijazah Requirements */}
+              {showIjazah && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="mb-10 p-6 bg-emerald-50 border border-emerald-100 rounded-2xl"
+                >
+                  <h4 className="text-lg font-bold text-emerald-800 mb-4">تم فتح باب الإجازة أونلاين للقرءان الكريم بقرائتي نافع و عاصم لوجه الله بشروط تتوفر مجتمعة في الطالبـ / بـة :</h4>
+                  <ol className="text-right space-y-3 text-emerald-700">
+                    <li>أن يكون أدبه و أخلاقه معروفة عندي</li>
+                    <li>أن يقرأ أولا مشافهة عليّ قدرا يوضح تمكنه من أداء الأحكام التجويدية بأداء متقن تطمئن له النفس و هذا القدر لا يمكن تحديده الآن لأن من الطلبه من يقرأ جزءا فنطمئن لسلامة اداؤه و منهم من يقرأ عشرة اجزاء و لازال في النفس منه شئ فمثل هذا لا نرده بل نلزمه بالختمه مشافهة ثم ختمة أخرى للاجازة..( و هذا الشرط ملغي في حق من قرأ عليّ قدراً مشافهة  ثم انقطع لظرف ما و أراد أن يكمل)</li>
+                    <li>أن يقرأ ختمة  وصل كامله لحفص من طرق القصر من طيبة النشر و أن يسمع و يشرح التحفة و الجزرية</li>
+                    <li>إذا كان طفلا حافظا (يلزم وجود ولي أمره اثناء الاتصال لضمان أن لا يفتح مصحفا</li>
+                    <li>القسم الا يفتح مصحفا ( و هذا الشرط ما اسهله علي كل أمين ) و ما اصعبه علي الاخر و لا نشكك في  احد</li>
+                    <li>ألا يطلب مالا ممن طلب منه الإجازة و رءاه أهلا حتي و لو عرض عليه المال ( فشرطي أن تُعلم مجانا كما تَعلمت  مجانا )   بهذا ينتشر العلم و نضيق المجال علي تجار العلم و الأسانيد</li>
+                  </ol>
+                </motion.div>
+              )}
+
+              {/* WhatsApp Contact */}
+              <div className="text-center">
                 <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.05-.521-.099-.148-.445-1.02-.612-1.395-.167-.378-.335-.328-.445-.328-.112 0-.24-.018-.37-.018-.13 0-.34.05-.52.247-.18.197-.688.673-.688 1.642 0 .969.706 1.905.804 2.039.099.133 1.39 2.123 3.368 2.979.471.203.839.324 1.126.415.473.149.904.128 1.245.078.38-.056 1.171-.48 1.336-.943.165-.464.165-.861.116-.944-.05-.083-.182-.133-.38-.282M12.028 3.5c-4.689 0-8.5 3.811-8.5 8.5 0 1.497.39 2.904 1.072 4.123L3.5 20.5l4.426-1.083A8.473 8.473 0 0012.028 20.5c4.689 0 8.5-3.811 8.5-8.5s-3.811-8.5-8.5-8.5"/>
                   </svg>
                 </div>
                 <h3 className="text-2xl font-bold text-slate-800 mb-2">تواصل معنا عبر واتساب</h3>
-                <p className="text-slate-500">عند الانتهاء من المرحلة، تواصل معنا عبر هذا الرقم للانتقال إلى المرحلة التالية</p>
-              </div>
-
-              <div className="flex justify-center">
+                <p className="text-slate-500 mb-6">عند الانتهاء من المرحلة، تواصل معنا عبر هذا الرقم للانتقال إلى المرحلة التالية</p>
+                
                 <Button 
                   type="button" 
                   size="lg" 
