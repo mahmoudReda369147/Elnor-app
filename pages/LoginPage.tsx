@@ -16,12 +16,27 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const validatePhoneNumber = (phone: string): boolean => {
+    // Remove any non-digit characters
+    const cleanPhone = phone.replace(/\D/g, '');
+    
+    // Check if it's a valid phone number (8-15 digits)
+    // Most phone numbers worldwide are between 8-15 digits
+    const phonePattern = /^\d{8,15}$/;
+    return phonePattern.test(cleanPhone);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    if (phone.length < 5 || password.length < 3) {
-      setError('يرجى التأكد من البيانات المدخلة');
+    if (!validatePhoneNumber(phone)) {
+      setError('يرجى إدخال رقم هاتف صحيح (8-15 رقم)');
+      return;
+    }
+
+    if (password.length < 3) {
+      setError('كلمة المرور يجب أن تكون 3 أحرف على الأقل');
       return;
     }
 
@@ -126,11 +141,21 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
                 <Input
                   label="رقم الهاتف"
-                  placeholder="05xxxxxxxx"
+                  placeholder="رقم الهاتف"
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    // Only allow digits
+                    const numericValue = e.target.value.replace(/\D/g, '');
+                    setPhone(numericValue);
+                    if (numericValue && !validatePhoneNumber(numericValue)) {
+                      setError('يرجى إدخال رقم هاتف صحيح');
+                    } else {
+                      setError('');
+                    }
+                  }}
                   required
+                  error={phone && !validatePhoneNumber(phone) ? 'رقم الهاتف يجب أن يحتوي على 8-15 رقم' : ''}
                   icon={
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
