@@ -233,7 +233,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onRegister }) => {
             transition={{ delay: 0.7, duration: 0.5 }}
             className="text-center text-slate-400 text-sm mt-8"
           >
-            جميع الحقوق محفوظة لمنصة النور © {new Date().getFullYear()}
+            جميع الحقوق محفوظة لمنصة حلقات دراية للتعليم عن بعد © {new Date().getFullYear()}
           </motion.p>
         </motion.div>
       </div>

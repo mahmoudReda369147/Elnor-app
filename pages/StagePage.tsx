@@ -262,7 +262,7 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                       <div className="flex items-center gap-4">
                         <div className={`
                           w-12 h-12 rounded-xl flex items-center justify-center
-                          ${item.type === 'video' ? 'bg-red-50 text-red-500' : item.type === 'pdf' ? 'bg-blue-50 text-blue-500' : 'bg-amber-50 text-amber-500'}
+                          ${item.type === 'video' ? 'bg-red-50 text-red-500' : item.type === 'pdf' ? 'bg-blue-50 text-blue-500' : item.type === 'playlist' ? 'bg-purple-50 text-purple-500' : 'bg-amber-50 text-amber-500'}
                         `}>
                           {item.type === 'video' ? (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -272,6 +272,10 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                           ) : item.type === 'pdf' ? (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                          ) : item.type === 'playlist' ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                             </svg>
                           ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -284,8 +288,8 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                           <p className="text-slate-500 text-sm">{item.description}</p>
                         </div>
                       </div>
-                      <Badge variant={item.type === 'video' ? 'primary' : item.type === 'pdf' ? 'neutral' : 'gold'}>
-                        {item.type === 'video' ? 'فيديو' : item.type === 'pdf' ? 'PDF' : 'صوت'}
+                      <Badge variant={item.type === 'video' ? 'primary' : item.type === 'pdf' ? 'neutral' : item.type === 'playlist' ? 'purple' : 'gold'}>
+                        {item.type === 'video' ? 'فيديو' : item.type === 'pdf' ? 'PDF' : item.type === 'playlist' ? 'قائمة تشغيل' : 'صوت'}
                       </Badge>
                     </div>
 
@@ -296,6 +300,17 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
                           <iframe
                             className="w-full h-full"
                             src={item.url}
+                            title={item.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
+                      ) : item.type === 'playlist' ? (
+                        <div className="aspect-video w-full">
+                          <iframe
+                            className="w-full h-full"
+                            src={item.url.replace('youtube.com/playlist', 'www.youtube.com/embed/videoseries')}
                             title={item.title}
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -363,42 +378,28 @@ const StagePage: React.FC<StagePageProps> = ({ user }) => {
 
             <div className="relative z-10">
               <div className="text-center mb-10">
-                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center text-white">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.05-.521-.099-.148-.445-1.02-.612-1.395-.167-.378-.335-.328-.445-.328-.112 0-.24-.018-.37-.018-.13 0-.34.05-.52.247-.18.197-.688.673-.688 1.642 0 .969.706 1.905.804 2.039.099.133 1.39 2.123 3.368 2.979.471.203.839.324 1.126.415.473.149.904.128 1.245.078.38-.056 1.171-.48 1.336-.943.165-.464.165-.861.116-.944-.05-.083-.182-.133-.38-.282M12.028 3.5c-4.689 0-8.5 3.811-8.5 8.5 0 1.497.39 2.904 1.072 4.123L3.5 20.5l4.426-1.083A8.473 8.473 0 0012.028 20.5c4.689 0 8.5-3.811 8.5-8.5s-3.811-8.5-8.5-8.5"/>
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-slate-800 mb-2">تواصل معنا</h3>
-                <p className="text-slate-500">هل لديك استفسار حول المنهج أو المقررات؟</p>
+                <h3 className="text-2xl font-bold text-slate-800 mb-2">تواصل معنا عبر واتساب</h3>
+                <p className="text-slate-500">عند الانتهاء من المرحلة، تواصل معنا عبر هذا الرقم للانتقال إلى المرحلة التالية</p>
               </div>
 
-              <form onSubmit={handleSendMessage} className="max-w-xl mx-auto space-y-6">
-                <Textarea
-                  placeholder="اكتب استفسارك هنا..."
-                  value={message}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setMessage(e.target.value)}
-                  required
-                />
-                <div className="flex justify-center">
-                  <Button type="submit" size="lg" disabled={submitted}>
-                    {submitted ? (
-                      <span className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        تم الإرسال بنجاح
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        إرسال الرسالة
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                      </span>
-                    )}
-                  </Button>
-                </div>
-              </form>
+              <div className="flex justify-center">
+                <Button 
+                  type="button" 
+                  size="lg" 
+                  onClick={() => window.open('https://wa.me/201097442709', '_blank')}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.05-.521-.099-.148-.445-1.02-.612-1.395-.167-.378-.335-.328-.445-.328-.112 0-.24-.018-.37-.018-.13 0-.34.05-.52.247-.18.197-.688.673-.688 1.642 0 .969.706 1.905.804 2.039.099.133 1.39 2.123 3.368 2.979.471.203.839.324 1.126.415.473.149.904.128 1.245.078.38-.056 1.171-.48 1.336-.943.165-.464.165-.861.116-.944-.05-.083-.182-.133-.38-.282M12.028 3.5c-4.689 0-8.5 3.811-8.5 8.5 0 1.497.39 2.904 1.072 4.123L3.5 20.5l4.426-1.083A8.473 8.473 0 0012.028 20.5c4.689 0 8.5-3.811 8.5-8.5s-3.811-8.5-8.5-8.5"/>
+                  </svg>
+                  +20 10 97442709
+                </Button>
+              </div>
             </div>
           </Card>
         </motion.section>

@@ -11,7 +11,7 @@ export const COLORS = {
 export const STAGES_DATA: Stage[] = [
   {
     id: 1,
-    title: 'المستوى الأول: التأسيس الشرعي',
+    title: 'المستوى الأول: التأسيس في بعض العلوم الشرعية و العربية',
     description: 'المرحلة الأولى لبناء طالب العلم، تشمل تسعة مقررات أساسية في مختلف العلوم الشرعية.',
     isUnlocked: true,
     curriculum: [
@@ -145,7 +145,71 @@ export const STAGES_DATA: Stage[] = [
         description: 'شرح كتاب صفة صلاة النبي للإمام الألباني.',
         url: 'https://archive.org/embed/sifatsalatelnabi',
         filter: 'فقه العبادات'
-      }
+      },
+      {
+        id: 'adab-v4',
+        type: 'playlist',
+        title: 'دورة شرح الاجرومية للمبتدئين',
+        description: "دورة شرح الاجرومية للمبتدئين - د سليمان العيوني",
+        url: "https://youtube.com/playlist?list=PLIkVd_x0tRkWCgkwQ6RqW8IkN7coA6WW9&si=7AmXpAARFunX1M69",
+        filter: 'علم النحو'
+      },
+      {
+        id: 'adab-v5',
+        type: 'playlist',
+        title: 'شرح ابن ابه للشنقيطي',
+        description: "شرح ابن ابه للشنقيطي  -  مسموع",
+        url: "https://youtube.com/playlist?list=PLrTbvvXShHHdoo3D0bKRPt47llJso43mm&si=OfyRkePsDIjOElj5",
+        filter: 'علم النحو'
+      },
+      {
+        id: 'adab-v6',
+        type: 'playlist',
+        title: "مكررة للحفظ",
+        description: "مكررة للحفظ",
+        url: "https://youtube.com/playlist?list=PLO965n8Y2pfzk3NRBzl4dYrKY7GUIA7Zs&si=hsOW-GtRZFSuTlu8",
+        filter: 'علم النحو'
+      },
+      {
+        id: 'adab-v7',
+        type: 'pdf',
+        title: "شرح منثور بن اجروم",
+        description: "شرح منثور بن اجروم للشيخ محي الدين عبد الحميد - مكتوب",
+        url: "https://eu.docs.wps.com/module/common/preview/?sid=sIKaA-9nOAoXvkcsG",
+        filter: 'علم النحو'
+      },
+      {
+        id: 'adab-v8',
+        type: 'pdf',
+        title: "شرح متن الآجرومية مصور",
+        description: "شرح متن الآجرومية مصور",
+        url: "https://eu.docworkspace.com/d/sIIiA-9nOArSjkssG?from=dch",
+        filter: 'علم النحو'
+      },
+      {
+        id: 'adab-v9',
+        type: 'playlist',
+        title: "شرح د صالح السحيمي",
+        description: "شرح د صالح السحيمي",
+        url: "https://youtube.com/playlist?list=PLkU_-JhRrICZTQIuMlWoX8IOFaKtJlGvs&si=JHQ8F3l-wk9e1kM7",
+        filter: 'العقيدة'
+      },
+      {
+        id: 'adab-v10',
+        type: 'playlist',
+        title: "شرح الشيخ عبد الرزاق البدر",
+        description: "شرح الشيخ عبد الرزاق البدر",
+        url: "https://youtube.com/playlist?list=PLxBFQC3cwb_2lS7HXwacmy_lOPVN766Q-&si=I-UD2_A2uhPIasls",
+        filter: 'العقيدة'
+      },
+      {
+        id: 'adab-v11',
+        type: 'pdf',
+        title: "ص اللامية لشيخ الاسلام بن تيمية . ",
+        description: "ص اللامية لشيخ الاسلام بن تيمية -مكتوبة ",
+        url: "https://eu.docworkspace.com/d/sICuA-9nOAqS7kssG?from=dch",
+        filter: 'العقيدة'
+      },
     ]
   },
   { id: 2, title: 'المستوى الثاني', description: 'سيتم فتحها قريباً بعد إتمام المرحلة السابقة.', isUnlocked: false, content: [] },

@@ -15,7 +15,7 @@ export interface Subject {
 
 export interface ContentItem {
   id: string;
-  type: 'video' | 'audio' | 'pdf';
+  type: 'video' | 'audio' | 'pdf' | 'playlist';
   title: string;
   description: string;
   url: string;

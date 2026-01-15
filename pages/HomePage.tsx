@@ -292,7 +292,7 @@ const HomePage: React.FC<HomePageProps> = ({ user, stages, onLogout }) => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm">
-              جميع الحقوق محفوظة لمنصة النور © {new Date().getFullYear()}
+              جميع الحقوق محفوظة لمنصة حلقات دراية للتعليم عن بعد © {new Date().getFullYear()}
             </p>
             <Button variant="ghost" size="sm" onClick={handleLogout} className="lg:hidden">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

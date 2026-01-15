@@ -182,7 +182,7 @@ export const Textarea: React.FC<TextareaProps> = ({ label, className = '', ...pr
 // Badge Component
 interface BadgeProps {
   children: React.ReactNode;
-  variant?: 'primary' | 'gold' | 'success' | 'neutral';
+  variant?: 'primary' | 'gold' | 'success' | 'neutral' | 'purple';
   size?: 'sm' | 'md';
 }
 
@@ -191,7 +191,8 @@ export const Badge: React.FC<BadgeProps> = ({ children, variant = 'primary', siz
     primary: 'bg-gradient-to-l from-teal-500 to-teal-600 text-white',
     gold: 'bg-gradient-to-l from-amber-400 to-amber-500 text-white',
     success: 'bg-gradient-to-l from-emerald-500 to-emerald-600 text-white',
-    neutral: 'bg-slate-100 text-slate-600'
+    neutral: 'bg-slate-100 text-slate-600',
+    purple: 'bg-gradient-to-l from-purple-500 to-purple-600 text-white'
   };
 
   const sizes = {

@@ -176,7 +176,7 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', variant = 'full', className = 
       <LogoIcon />
       <div className="flex flex-col items-start">
         <span className={`font-extrabold bg-gradient-to-l from-teal-600 via-teal-700 to-teal-800 bg-clip-text text-transparent leading-tight ${sizes[size].text}`}>
-          منصة النور
+          منصة حلقات دراية للتعليم عن بعد
         </span>
         <span className="text-slate-500 text-sm font-medium tracking-wide">التعليمية</span>
       </div>

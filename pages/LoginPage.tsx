@@ -90,7 +90,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-4xl font-extrabold bg-gradient-to-l from-teal-700 to-teal-900 bg-clip-text text-transparent mb-3"
             >
-              منصة النور
+              منصة حلقات دراية للتعليم عن بعد
             </motion.h1>
 
             <motion.p
@@ -203,7 +203,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             transition={{ delay: 0.7, duration: 0.5 }}
             className="text-center text-slate-400 text-sm mt-8"
           >
-            جميع الحقوق محفوظة لمنصة النور © {new Date().getFullYear()}
+            جميع الحقوق محفوظة لمنصة حلقات دراية للتعليم عن بعد © {new Date().getFullYear()}
           </motion.p>
         </motion.div>
       </div>
